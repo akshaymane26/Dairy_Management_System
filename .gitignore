@@ -1,0 +1,95 @@
+
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# dotenv environment variable file
+.env
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# IDE or editor specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+temp/
+tmp/
+
+# Coverage directory used by testing tools
+coverage/
+
+# TypeScript build artifacts
+dist/
+build/
+
+# Environment-specific configurations
+.env.*
+!.env.example
+
+# Logs and error reports
+*.log
+*.trace
+*.stackdump
+*.gz
+
+# System-generated files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.swn
+
+# macOS and Windows files
+.DS_Store
+Thumbs.db
+
+# Other IDE/editor-specific files
+*.sublime-project
+*.sublime-workspace
+
+# Lint or formatting cache
+.eslintcache
+.prettiercache
+
+# Debug or profiling files
+.nyc_output/
+node_inspect/
+.prof/
+.vscode/
+
+# Optional lock files
+package-lock.json
+yarn.lock
+.pnpm-lock.yaml
+
+# Temporary files
+temp/
+tmp/
