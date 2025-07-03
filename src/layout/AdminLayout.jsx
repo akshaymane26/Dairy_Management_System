@@ -1,3 +1,4 @@
+// here we combine the sidebar and header components to create a layout for the admin panel
 import React from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
