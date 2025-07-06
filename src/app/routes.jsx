@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route} from "react-router-dom";
 import AdminLayout from "../layout/AdminLayout";
-// import Dashboard from "../pages/Dashboard";
+import Dashboard from "../features/dashboard/pages/dashboard.jsx";
 // import MilkCollection from "../pages/MilkCollection";
 // import Farmers from "../pages/Farmers";
 // import RateChart from "../pages/RateChart";
@@ -13,7 +13,7 @@ export default function AppRoutes() {
         <Routes>
            {/* <Route path="/login" element={<Login />} /> */}
             <Route element={<AdminLayout />}>
-            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/milk-collection" element={<MilkCollection />} />
             {/* <Route path="/farmers" element={<Farmers />} /> */}
             {/* <Route path="/rate-chart" element={<RateChart />} /> */}
