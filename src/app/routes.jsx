@@ -14,6 +14,7 @@ export default function AppRoutes() {
            {/* <Route path="/login" element={<Login />} /> */}
             <Route element={<AdminLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/milk-collection" element={<MilkCollection />} />
             {/* <Route path="/farmers" element={<Farmers />} /> */}
             {/* <Route path="/rate-chart" element={<RateChart />} /> */}
