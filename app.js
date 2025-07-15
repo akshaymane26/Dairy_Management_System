@@ -34,19 +34,19 @@ async function main() {
 
 
 
-// app.get('/',(req, res)=>{
-//     res.send('hii app is running');
-// })
+app.get('/',(req, res)=>{
+    res.send('hey app is running');
+})
 app.use('/uploads', express.static('uploads'));
 
 
-const authRoute = require('./routes/authRoutes');
-const vidhanSabhaRoute = require('./routes/vidhansabhaRoutes');
-const newVoter = require('./routes/newVotterRoutes');
+// const authRoute = require('./routes/authRoutes');
+const farmerRoute = require('./routes/framerRoute');
+// const newVoter = require('./routes/newVotterRoutes');
 
-app.use('/api',authRoute);
-app.use('/',vidhanSabhaRoute);
-app.use('/api/surve',newVoter);
+// app.use('/api',authRoute);
+app.use('/api',farmerRoute);
+// app.use('/api/surve',newVoter);
 
 app.use(cors());
 
