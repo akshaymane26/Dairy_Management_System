@@ -15,14 +15,14 @@ export default function Dashboard(){
     },[])
 return(
     <Grid container spacing={2}>
-        <Grid item={12} md={6}>
+        <Grid item={12} sm={6} md={4}>
             <Paper elevation={2} sx={{ p:2 }}>
                 <Typography variant='h6'>Totoal Milk collected Today</Typography>
                 <Typography variant='h4'>{data.totalMilk} L</Typography>
             </Paper>
         </Grid>
 
-        <Grid item sx={12} md={6}>
+        <Grid item sx={12} sm={6} md={4}>
             <Paper elevation={2} sx={{ p:2}}>
                 <Typography variant='h6'>Totoal Register Farmer</Typography>
                 <Typography variant='h4'>{data.farmer}</Typography>
