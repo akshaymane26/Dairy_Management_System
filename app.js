@@ -5,16 +5,25 @@ require('dotenv').config();
 const cors = require('cors');
 
 app.use(express.static('public'));
-// app.use(cors());
 app.use(express.json());
 
-app.use((req , res , next )=> {
-	res.setHeader('Access-Control-Allow-Origin' ,'*');
-	res.setHeader('Access-Control-Allow-Methods' ,'GET , POST , PUT , PATCH , DELETE');
-	res.setHeader('Access-Control-Allow-Headers' ,'Content-Type, X-Requested-With , Accept , Origin, authorization'  );
-	res.setHeader('Access-Control-Expose-Headers' , 'authorization');
-	next();
-});
+// app.use(cors());
+// app.use((req , res , next )=> {
+// 	res.setHeader('Access-Control-Allow-Origin' ,'*');
+// 	res.setHeader('Access-Control-Allow-Methods' ,'GET , POST , PUT , PATCH , DELETE');
+// 	res.setHeader('Access-Control-Allow-Headers' ,'Content-Type, X-Requested-With , Accept , Origin, authorization'  );
+// 	res.setHeader('Access-Control-Expose-Headers' , 'authorization');
+// 	next();
+// });
+const corsOptions = {
+  origin: "*", // or specify frontend like 'http://localhost:5173'
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 
 const url = process.env.MONGO_URL
 console.log("GET FROM ENV",url);
