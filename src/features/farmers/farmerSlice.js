@@ -4,9 +4,9 @@ import axios from '../../services/axiosInstance';
 // FETCH ALL FARMERS
 export const fetchFarmers = createAsyncThunk("farmers/fetch", async () => {
     const response = await axios.get('/getAllFarmers');
-    console.log("==============");
-    console.log("Farmers fetched:", response.data);
-    console.log("==============");
+    // console.log("==============");
+    // console.log("Farmers fetched:", response.data);
+    // console.log("==============");
     
     return response.data;
 });
@@ -46,39 +46,14 @@ const farmerSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchFarmers.fulfilled, (state, action) => {
-                console.log("Farmers fetched successfully:", action.payload);
+                // console.log("Farmers fetched successfully:", action.payload);
                 state.list = action.payload;
                 state.loading = false;
                 state.error = null;
-                console.log("Farmers state updated:", state.list);
-                console.log("Farmers loading state:", state.loading);
-                console.log("Farmers error state:", state.error);
-                console.log("Action payload:", action.payload);
-                console.log("Action error info:", action.error);
-                console.log("Action type:", action.type);
-                console.log("Action meta:", action.meta);
-                console.log("Farmers slice state after fetch:", state);
-                console.log("==============");
-                console.log("Farmers slice state after fetch:", {
-                    list: state.list,
-                    loading: state.loading,
-                    error: state.error
-                });
-                console.log("==============");
-                console.log("Farmers slice state after fetch:", {
-                    list: state.list,
-                    loading: state.loading,
-                    error: state.error
-                });
-                console.log("==============");
                 
+
             })
             .addCase(fetchFarmers.rejected, (state, action) => {
-                console.error("Error fetching farmers:", action.error.message);
-                console.error("Action payload:", action.payload);
-                console.error("Action error info:", action.error);
-                console.error("Action type:", action.type);
-                console.error("Action meta:", action.meta);
                 state.loading = false;
                 state.error = action.error.message;
             })
