@@ -13,13 +13,13 @@ export const fetchFarmers = createAsyncThunk("farmers/fetch", async () => {
 
 // ADD FARMER
 export const addFarmer = createAsyncThunk("farmers/add", async (farmerData) => {
-    const response = await axios.post('/farmers', farmerData);
+    const response = await axios.post('/addFarmer', farmerData);
     return response.data;
 });
 
 // UPDATE FARMER
 export const updateFarmer = createAsyncThunk("farmers/update", async ({ id, farmerData }) => {
-    const response = await axios.put(`/farmers/${id}`, farmerData);
+    const response = await axios.put(`/updateFarmer/${id}`, farmerData);
     return response.data;
 });
 
@@ -40,7 +40,7 @@ const farmerSlice = createSlice({
         builder
             // Fetch
             .addCase(fetchFarmers.pending, (state) => {
-                console.log("Fetching farmers...");
+                // console.log("Fetching farmers...");
                 
                 state.loading = true;
                 state.error = null;
@@ -51,7 +51,6 @@ const farmerSlice = createSlice({
                 state.loading = false;
                 state.error = null;
                 
-
             })
             .addCase(fetchFarmers.rejected, (state, action) => {
                 state.loading = false;
