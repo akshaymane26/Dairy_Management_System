@@ -1,38 +1,105 @@
 const { get } = require('mongoose');
 const Farmer = require('../../models/Farmer');
 
-const addFarmer =async (req, res ) => {
-    try {
+// const addFarmer =async (req, res ) => {
+//     try {
 
-        const { customerNumber, name, mobile, address } = req.body;
-        // Validate required fields
-        if (!customerNumber || !name) {
-            return res.status(400).json({ message: 'Customer number and name are required' });
-        }
-        // Check if the farmer already exists
-        const existingFarmer = await Farmer.findOne({ customerNumber });
-        if (existingFarmer ) {
-            return res.status(400).json({ message: 'famer with this customer number already exists' });
-        }
-        // create a new farmer
-        const newFarmer = new Farmer({
-            customerNumber, 
-            name, 
-            mobile,
-            address
-        });
+//         const { customerNumber, name, mobile, address } = req.body;
+//         // Validate required fields
+//         if (!customerNumber || !name) {
+//             return res.status(400).json({ message: 'Customer number and name are required' });
+//         }
+//         // Check if the farmer already exists
+//         const existingFarmer = await Farmer.findOne({ customerNumber });
+//         if (existingFarmer ) {
+//             return res.status(400).json({ message: 'famer with this customer number already exists' });
+//         }
+//         // create a new farmer
+//         const newFarmer = new Farmer({
+//             customerNumber, 
+//             name, 
+//             mobile,
+//             address
+//         });
 
-        // Save the farmer to the database
-        await newFarmer.save();
-        res.status(201).json({
-            message: 'Farmer created successfully', farmer: newFarmer 
-        });
+//         // Save the farmer to the database
+//         await newFarmer.save();
+//         res.status(201).json({
+//             message: 'Farmer created successfully', farmer: newFarmer 
+//         });
 
-    } catch (error) {
-        console.error('Error in FarmerController:', error);
-        res.status(500).json({ message: 'Internal server error' });
+//     } catch (error) {
+//         console.error('Error in FarmerController:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// }
+
+const addFarmer = async (req, res) => {
+  try {
+    const {
+      customerNumber,
+      firstName,
+      middleName,
+      lastName,
+      localLanguageName,
+      mobile,
+      address,
+      isActive,
+      openingBalance,
+      balanceType,
+      milkRateType,
+      milkType,
+      fixedRates,     // { cow: 0, buffalo: 0 }
+      rateCharts      // { cow: ObjectId, buffalo: ObjectId }
+    } = req.body;
+
+    // Basic validation
+    if (!customerNumber || !firstName || !milkRateType || !milkType) {
+      return res.status(400).json({ message: 'Required fields are missing' });
     }
+
+    // Check if farmer already exists
+    const existingFarmer = await Farmer.findOne({ customerNumber });
+    if (existingFarmer) {
+      return res.status(400).json({ message: 'Farmer with this customer number already exists' });
+    }
+
+if (milkRateType === 'Fixed Rates' && (!fixedRates || (fixedRates.cow === undefined && fixedRates.buffalo === undefined))) {
+  return res.status(400).json({ message: 'Fixed rates are required for fixed rate type' });
 }
+
+if (milkRateType === 'By Rate Chart' && (!rateCharts || (!rateCharts.cow && !rateCharts.buffalo))) {
+  return res.status(400).json({ message: 'Rate chart is required when using rate chart type' });
+}
+
+
+    // Create new farmer
+    const newFarmer = new Farmer({
+      customerNumber,
+      firstName,
+      middleName,
+      lastName,
+      localLanguageName,
+      mobile,
+      address,
+      isActive,
+      openingBalance,
+      balanceType,
+      milkRateType,
+      milkType,
+      fixedRates,
+      rateCharts
+    });
+
+    await newFarmer.save();
+    res.status(201).json({ message: 'Farmer created successfully', farmer: newFarmer });
+
+  } catch (error) {
+    console.error('Error in addFarmer:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 const getAllFarmers = async (req, res) => {
     try{
@@ -66,33 +133,94 @@ const getFarmerByID = async (req, res) => {
     }
 }
 
+// const updateFarmer = async (req, res) => {
+//     try {
+//         // console.log("=====im comming");
+//             const farmerId = req.params.id;
+//         // console.log("=====im comming", req);
+        
+//         const { customerNumber, name, mobile, address } = req.body;
+//         if (!farmerId) {
+//             return res.status(400).json({ message: 'Farmer ID is required' });
+//         }
+//         console.log(req.body);
+        
+//         const updatedFarmer = await Farmer.findByIdAndUpdate(
+//             farmerId, 
+//             { customerNumber, name, mobile, address },
+//             { new: true, runValidators: true }
+//         );
+//         if (!updatedFarmer) {
+//             return res.status(404).json({ message: 'Farmer not found' });
+//         }
+//         res.status(200).json({ message: 'Farmer updated successfully', farmer: updatedFarmer });
+//     }
+//     catch (error) {
+//         console.error('Error in updateFarmer:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// }
+
 const updateFarmer = async (req, res) => {
-    try {
-        // console.log("=====im comming");
-            const farmerId = req.params.id;
-        // console.log("=====im comming", req);
-        
-        const { customerNumber, name, mobile, address } = req.body;
-        if (!farmerId) {
-            return res.status(400).json({ message: 'Farmer ID is required' });
-        }
-        console.log(req.body);
-        
-        const updatedFarmer = await Farmer.findByIdAndUpdate(
-            farmerId, 
-            { customerNumber, name, mobile, address },
-            { new: true, runValidators: true }
-        );
-        if (!updatedFarmer) {
-            return res.status(404).json({ message: 'Farmer not found' });
-        }
-        res.status(200).json({ message: 'Farmer updated successfully', farmer: updatedFarmer });
+  try {
+    const farmerId = req.params.id;
+    if (!farmerId) {
+      return res.status(400).json({ message: 'Farmer ID is required' });
     }
-    catch (error) {
-        console.error('Error in updateFarmer:', error);
-        res.status(500).json({ message: 'Internal server error' });
+
+    const {
+      customerNumber,
+      firstName,
+      middleName,
+      lastName,
+      localLanguageName,
+      mobile,
+      address,
+      isActive,
+      openingBalance,
+      balanceType,
+      milkRateType,
+      milkType,
+      fixedRates,
+      rateCharts
+    } = req.body;
+
+    const updatedFields = {
+      customerNumber,
+      firstName,
+      middleName,
+      lastName,
+      localLanguageName,
+      mobile,
+      address,
+      isActive,
+      openingBalance,
+      balanceType,
+      milkRateType,
+      milkType,
+      fixedRates,
+      rateCharts
+    };
+
+    const updatedFarmer = await Farmer.findByIdAndUpdate(
+      farmerId,
+      updatedFields,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedFarmer) {
+      return res.status(404).json({ message: 'Farmer not found' });
     }
-}
+
+    res.status(200).json({ message: 'Farmer updated successfully', farmer: updatedFarmer });
+
+  } catch (error) {
+    console.error('Error in updateFarmer:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 const deleteFarmer = async (req, res) => {
     try {
         const farmerId = req.params.id;
