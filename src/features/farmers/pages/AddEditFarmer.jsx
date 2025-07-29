@@ -16,7 +16,7 @@ export default function AddEditFarmer({ isEdit = false, initialData = {} }){
         // console.log(state.farmer.list.find((f) => f._id === id));
         // console.log("=end=");
         const found = state.farmer.list.find((f) => f._id === id)
-        return found ? found : initialData; // Return found farmer or initial data
+        return found ? found : initialData; // Return found farmer or initial data 
     })
     //    const farmer = useSelector((state) =>
     //     state.farmer.list.find((f) => f._id === id)
